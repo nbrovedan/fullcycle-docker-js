@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=qwe123
+      - MYSQL_DATABASE=fullcycle
+    volumes:
+      - ./sql-init-scripts:/docker-entrypoint-initdb.d
+      - ./mysql:/var/lib/mysql
+    networks:
+      - redeapp
+
+  app:
+    build: 
+      context: ./app
+    image: nbrovedan/desafio-docker-js:prd
+    container_name: node-app
+    networks:
+      - redeapp
+    depends_on:
+      - db
+
+  nginx:
+    build: 
+      context: ./nginx
+    image: nbrovedan/desafio-docker-nginx:prd
+    container_name: nginx
+    networks:
+      - redeapp
+    ports:
+      - 8000:80
+    depends_on:
+      - app
+
+networks:
+  redeapp:
+    driver: bridge
