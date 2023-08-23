@@ -10,8 +10,8 @@ services:
       - MYSQL_ROOT_PASSWORD=qwe123
       - MYSQL_DATABASE=fullcycle
     volumes:
-      - ./sql-init-scripts:/docker-entrypoint-initdb.d
-      - ./mysql:/var/lib/mysql
+      - ./db/sql-init-scripts:/docker-entrypoint-initdb.d
+      - ./db/mysql:/var/lib/mysql
     networks:
       - redeapp
 
