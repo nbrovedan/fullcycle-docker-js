@@ -20,6 +20,8 @@ services:
       context: ./app
     image: nbrovedan/desafio-docker-js:prd
     container_name: node-app
+    volumes:
+      - ./app:/app
     networks:
       - redeapp
     depends_on:

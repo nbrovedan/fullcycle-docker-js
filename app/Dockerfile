@@ -4,16 +4,11 @@ WORKDIR /app
 
 EXPOSE 3000
 
-RUN apk update && apk add bash
+RUN apk update && apk add bash 
 
-COPY ["package.json", "package-lock.json", "./"]
+COPY ../wait-for-it.sh wait-for-it.sh 
 
-RUN npm install
+RUN npm install nodemon -g && \
+    chmod -R +x ./wait-for-it.sh
 
-COPY . .
-
-COPY wait-for-it.sh wait-for-it.sh
-
-RUN chmod +x wait-for-it.sh
-
-CMD ["./wait-for-it.sh" , "db:3306" , "--strict" , "--timeout=300" , "--" , "node", "app.js"]
+CMD ["./wait-for-it.sh" , "db:3306" , "--strict" , "--timeout=300" , "--" , "nodemon", "app.js"]
