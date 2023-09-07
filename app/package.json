@@ -4,14 +4,15 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "npm install",
+    "start": "./wait-for-it.sh db:3306 --strict --timeout=300 -- nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
     "mysql": "^2.18.1",
-    "node-random-name": "^1.0.1",
-    "nodemon": "^3.0.1"
+    "node-random-name": "^1.0.1"
   }
 }
